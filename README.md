@@ -1,97 +1,47 @@
-# CrediYa – Plataforma de Solicitudes de Préstamos
+# Proyecto Base Implementando Clean Architecture
 
-CrediYa es una plataforma que busca digitalizar y optimizar la gestión de solicitudes de préstamos personales, eliminando procesos manuales y presenciales.
-El sistema permite que los solicitantes ingresen sus datos y la información del préstamo que desean, los evalúa automáticamente y notifica a los administradores para la aprobación final.
+## Antes de Iniciar
 
-## Funcionalidades principales
+Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
 
-- Gestión de tipos de préstamos: Crear, editar y eliminar productos de crédito.
+Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
 
-- Proceso de solicitud: Envío de datos de préstamo por solicitantes.
+# Arquitectura
 
-- Capacidad de endeudamiento: Evaluación automática mediante reglas de negocio.
+![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
 
-- Gestión de usuarios y roles: Solicitantes y administradores con permisos diferenciados.
+## Domain
 
-- Notificaciones automáticas: Estado del crédito vía correo/SMS.
+Es el módulo más interno de la arquitectura, pertenece a la capa del dominio y encapsula la lógica y reglas del negocio mediante modelos y entidades del dominio.
 
-- Reportes de rendimiento: Métricas del negocio (préstamos aprobados, rechazados, montos).
+## Usecases
 
-## Arquitectura
+Este módulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lógica de aplicación y reacciona a las invocaciones desde el módulo de entry points, orquestando los flujos hacia el módulo de entities.
 
-La solución está construida bajo un modelo de microservicios reactivos con Spring WebFlux y arquitectura hexagonal.
+## Infrastructure
 
-### Microservicios principales:
+### Helpers
 
-- auth-service → autenticación y gestión de usuarios.
+En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
 
-- loan-service → gestión de solicitudes y productos de crédito.
+Estas utilidades no están arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
+genéricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
+basadas en el patrón de diseño [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
 
-- scoring-service → evaluación de capacidad de endeudamiento.
+Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
 
-- notification-service → envío de notificaciones.
+### Driven Adapters
 
-- reporting-service → reportes de rendimiento.
+Los driven adapter representan implementaciones externas a nuestro sistema, como lo son conexiones a servicios rest,
+soap, bases de datos, lectura de archivos planos, y en concreto cualquier origen y fuente de datos con la que debamos
+interactuar.
 
-## Tecnologías:
+### Entry Points
 
-- Backend: Java 17, Spring Boot, Spring WebFlux.
+Los entry points representan los puntos de entrada de la aplicación o el inicio de los flujos de negocio.
 
-- DB Relacional (RDS - PostgreSQL): Solicitudes, usuarios y préstamos.
+## Application
 
-- DB No Relacional (DynamoDB): Reportes y métricas.
+Este módulo es el más externo de la arquitectura, es el encargado de ensamblar los distintos módulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma automática, inyectando en éstos instancias concretas de las dependencias declaradas. Además inicia la aplicación (es el único módulo del proyecto donde encontraremos la función “public static void main(String[] args)”.
 
-- Mensajería (SQS): Comunicación asíncrona entre servicios.
-
-- Infraestructura (AWS): ECS Fargate, API Gateway, Lambda, CloudWatch, Secret Manager.
-
-## Estructura del proyecto
-
-Cada microservicio se encuentra en un repositorio independiente siguiendo el scaffold de Clean Architecture Bancolombia.
-
-/crediya
-   ├── auth-service
-   ├── loan-service
-   ├── scoring-service
-   ├── notification-service
-   ├── reporting-service
-   └── docs
-
-
-Dentro de cada microservicio:
-
-/src
-   ├── main/java/com/crediya
-   │     ├── application   -> Casos de uso
-   │     ├── domain        -> Entidades del dominio
-   │     ├── infrastructure-> Adapters (DB, SQS, REST)
-   │     └── entrypoints   -> Controladores WebFlux
-   └── test/java/com/crediya 
-
-## Instalación y ejecución local
-
-- Clonar el repositorio correspondiente:
-
-        git clone https://github.com/crediya/loan-service.git
-        cd loan-service
-
-
-- Compilar y correr con Gradle:
-
-        ./gradlew bootRun
-
-
-La API estará disponible en:
-
-    http://localhost:8080
-
-
-Documentación de endpoints:
-
-`http://localhost:8080/swagger-ui.html`
-
-## Testing
-
-Ejecutar pruebas unitarias:
-
-    ./gradlew test
+**Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
