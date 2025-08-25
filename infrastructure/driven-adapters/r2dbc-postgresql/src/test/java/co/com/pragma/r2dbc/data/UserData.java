@@ -5,19 +5,23 @@ import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.relational.core.mapping.Column;
 import lombok.Data;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
-@Table("users")
+@Table("usuarios")
 public class UserData {
 
     @Id
     private Long id;
-    private String name;
-    private String lastName;
+    private String nombre;
+    private String apellido;
+    private String documentoIdentidad;
+    private LocalDate fechaNacimiento;
+    private String direccion;
     private String email;
-    private String phone;
-    private BigDecimal baseSalary;
+    private String telefono;
+    private BigDecimal salarioBase;
 
-    @Column("id_role")
-    private Long idRole;
+    @Column("id_rol")
+    private Long idRol;
 }

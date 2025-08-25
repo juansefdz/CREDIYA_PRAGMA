@@ -1,6 +1,7 @@
 package co.com.pragma.model.user;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import co.com.pragma.model.role.Role;
 import lombok.*;
@@ -14,12 +15,15 @@ public class User {
 
     private Long id;
 
-    private String name;
-    private String lastName;
+    private String nombre;
+    private String apellido;
+    private String documentoIdentidad;
+    private LocalDate fechaNacimiento;
+    private String direccion;
     private String email;
-    private String phone;
-    private BigDecimal baseSalary;
+    private String telefono;
+    private BigDecimal salarioBase;
 
-    private Role role;
+    private Role rol;
 
 }
