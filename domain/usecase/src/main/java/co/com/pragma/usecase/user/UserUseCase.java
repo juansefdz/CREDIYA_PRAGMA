@@ -30,7 +30,7 @@ public class UserUseCase {
 
     private Mono<User> validateRequiredFields(User user) {
         if (Objects.isNull(user.getNombre()) || user.getNombre().isBlank() ||
-                Objects.isNull(user.getApellido()) || user.getApellido().isBlank() ||
+                Objects.isNull(user.getApellidos()) || user.getApellidos().isBlank() ||
                 Objects.isNull(user.getFechaNacimiento()) ||
                 Objects.isNull(user.getDireccion()) || user.getDireccion().isBlank() ||
                 Objects.isNull(user.getDocumentoIdentidad()) || user.getDocumentoIdentidad().isBlank() ||

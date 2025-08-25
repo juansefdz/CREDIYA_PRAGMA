@@ -6,7 +6,7 @@ import co.com.pragma.api.dto.UserRequestDTO;
 import co.com.pragma.model.user.User;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public interface UserApiMapper  {
 
     User fromDTO(UserRequestDTO dto);
 }

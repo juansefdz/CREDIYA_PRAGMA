@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 public class Role {
 
-    private UUID id;
+    private Long id;
 
     private String nombre;
     private String descripcion;
