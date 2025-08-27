@@ -1,7 +1,9 @@
 package co.com.pragma.r2dbc.repository;
 
 import co.com.pragma.r2dbc.data.RoleData;
-import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import reactor.core.publisher.Mono;
 
-public interface RoleDataRepository extends R2dbcRepository<RoleData, Long> {
+public interface RoleDataRepository extends ReactiveCrudRepository<RoleData, Long> {
+    Mono<RoleData> findByNombre(String nombre);
 }

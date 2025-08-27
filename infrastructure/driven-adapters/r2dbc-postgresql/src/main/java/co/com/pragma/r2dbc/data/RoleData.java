@@ -1,11 +1,9 @@
 package co.com.pragma.r2dbc.data;
 
-import java.math.BigInteger;
-import java.util.UUID;
 
 import org.springframework.data.relational.core.mapping.Table;
 
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 import lombok.Data;
 
 @Data

@@ -22,6 +22,6 @@ public class UserData {
     private String telefono;
     private BigDecimal salarioBase;
 
-    @Column("id_rol")
+    @Column("rol_id")
     private Long idRol;
 }

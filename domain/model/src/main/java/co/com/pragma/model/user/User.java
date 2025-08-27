@@ -8,7 +8,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class User {
@@ -24,6 +23,7 @@ public class User {
     private String telefono;
     private BigDecimal salarioBase;
 
-    private Role rol;
+    @With
+    private final Role rol;
 
 }

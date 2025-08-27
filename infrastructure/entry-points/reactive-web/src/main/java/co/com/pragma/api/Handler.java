@@ -27,11 +27,16 @@ public class Handler {
     public Mono<ServerResponse> registrarUsuario(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(UserRequestDTO.class)
                 .flatMap(this::validateDTO)
-                .map(userApiMapper::fromDTO)
-                .flatMap(userUseCase::createUser)
-                .flatMap(user -> ServerResponse.status(HttpStatus.CREATED)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .bodyValue(user));
+                .flatMap(dto -> {
+                    var user = userApiMapper.fromDTO(dto);
+                    var roleId = String.valueOf(dto.getIdRol());
+                    return userUseCase.execute(user, roleId);
+                })
+                .flatMap(user ->
+                        ServerResponse.status(HttpStatus.CREATED)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(user)
+                );
     }
 
 
