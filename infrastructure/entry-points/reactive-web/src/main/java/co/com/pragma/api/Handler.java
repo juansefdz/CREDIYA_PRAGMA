@@ -2,7 +2,8 @@ package co.com.pragma.api;
 
 import co.com.pragma.api.dto.UserRequestDTO;
 import co.com.pragma.api.mapper.UserApiMapper;
-import co.com.pragma.usecase.user.UserUseCase;
+
+import co.com.pragma.api.service.UserTransactionalService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Handler {
 
-    private final UserUseCase userUseCase;
+    private final UserTransactionalService userTransactionalService;
     private final UserApiMapper userApiMapper;
     private final Validator validator;
 
@@ -30,7 +31,7 @@ public class Handler {
                 .flatMap(dto -> {
                     var user = userApiMapper.fromDTO(dto);
                     var roleId = String.valueOf(dto.getIdRol());
-                    return userUseCase.execute(user, roleId);
+                    return userTransactionalService.registrarNuevoUsuario(dto, roleId);
                 })
                 .flatMap(user ->
                         ServerResponse.status(HttpStatus.CREATED)

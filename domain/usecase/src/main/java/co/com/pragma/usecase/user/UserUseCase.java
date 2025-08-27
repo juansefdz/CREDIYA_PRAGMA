@@ -20,6 +20,7 @@ public class UserUseCase {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+
     private static final BigDecimal MAX_SALARY = new BigDecimal("15000000");
 
     public Mono<User> execute(User userDraft, String roleId) {
@@ -35,7 +36,6 @@ public class UserUseCase {
     }
 
     private Mono<User> validateAllRules(User user) {
-        // La validación de salario es síncrona, puede ir primero.
         if (user.getSalarioBase().compareTo(BigDecimal.ZERO) < 0 || user.getSalarioBase().compareTo(MAX_SALARY) > 0) {
             return Mono.error(new InvalidSalaryException("El salario base debe estar entre 0 y 15,000,000."));
         }
