@@ -6,24 +6,20 @@ import java.time.LocalDate;
 import co.com.pragma.model.role.Role;
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Value
 @Builder(toBuilder = true)
 public class User {
 
-    private Long id;
-
-    private String nombre;
-    private String apellidos;
-    private String documentoIdentidad;
-    private LocalDate fechaNacimiento;
-    private String direccion;
-    private String email;
-    private String telefono;
-    private BigDecimal salarioBase;
+    Long id;
+    String nombre;
+    String apellidos;
+    String documentoIdentidad;
+    LocalDate fechaNacimiento;
+    String direccion;
+    String email;
+    String telefono;
+    BigDecimal salarioBase;
 
     @With
-    private final Role rol;
-
+    Role rol;
 }
