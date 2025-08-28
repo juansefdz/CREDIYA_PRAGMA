@@ -36,7 +36,7 @@ public class Handler {
                 .flatMap(user ->
                         ServerResponse.status(HttpStatus.CREATED)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .bodyValue(user)
+                                .bodyValue(userApiMapper.toDTO(user))
                 );
     }
 
