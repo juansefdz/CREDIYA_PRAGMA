@@ -6,17 +6,7 @@ El sistema permite que los solicitantes ingresen sus datos y la información del
 
 ## Funcionalidades principales
 
-- Gestión de tipos de préstamos: Crear, editar y eliminar productos de crédito.
-
-- Proceso de solicitud: Envío de datos de préstamo por solicitantes.
-
-- Capacidad de endeudamiento: Evaluación automática mediante reglas de negocio.
-
-- Gestión de usuarios y roles: Solicitantes y administradores con permisos diferenciados.
-
-- Notificaciones automáticas: Estado del crédito vía correo/SMS.
-
-- Reportes de rendimiento: Métricas del negocio (préstamos aprobados, rechazados, montos).
+- 
 
 ## Arquitectura
 
@@ -26,25 +16,11 @@ La solución está construida bajo un modelo de microservicios reactivos con Spr
 
 - auth-service → autenticación y gestión de usuarios.
 
-- loan-service → gestión de solicitudes y productos de crédito.
-
-- scoring-service → evaluación de capacidad de endeudamiento.
-
-- notification-service → envío de notificaciones.
-
-- reporting-service → reportes de rendimiento.
-
 ## Tecnologías:
 
 - Backend: Java 17, Spring Boot, Spring WebFlux.
 
 - DB Relacional (RDS - PostgreSQL): Solicitudes, usuarios y préstamos.
-
-- DB No Relacional (DynamoDB): Reportes y métricas.
-
-- Mensajería (SQS): Comunicación asíncrona entre servicios.
-
-- Infraestructura (AWS): ECS Fargate, API Gateway, Lambda, CloudWatch, Secret Manager.
 
 ## Estructura del proyecto
 
@@ -52,11 +28,6 @@ Cada microservicio se encuentra en un repositorio independiente siguiendo el sca
 
 /crediya
    ├── auth-service
-   ├── loan-service
-   ├── scoring-service
-   ├── notification-service
-   ├── reporting-service
-   └── docs
 
 
 Dentro de cada microservicio:
@@ -73,7 +44,7 @@ Dentro de cada microservicio:
 
 - Clonar el repositorio correspondiente:
 
-        git clone https://github.com/crediya/loan-service.git
+        git clone https://github.com/crediya/crediya-auth-microservice.git
         cd loan-service
 
 
